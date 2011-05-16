@@ -1,0 +1,3 @@
+[submodule "externals/mixingloom-core"]
+	path = externals/mixingloom-core
+	url = https://github.com/MixingLoom/mixingloom-core.git

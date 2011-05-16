@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<injections>
+    <injection>
+		<source>
+			<entry>
+				<className>profiler.TimeProfiler</className>
+				<methodName>start</methodName>
+			</entry>
+			<exit>
+				<className>profiler.TimeProfiler</className>
+				<methodName>finish</methodName>
+			</exit>
+        </source>
+		<targets>
+			<target>
+				<className>blah.Foo</className>
+				<methodName>getBar</methodName>
+			</target>
+			<target>
+				<className>blah.Foo</className>
+				<methodName>getPrivateBar</methodName>
+			</target>
+			<target>
+				<className>blah.Foo</className>
+				<methodName>getSecondBar</methodName>
+			</target>
+			<target>
+				<className>blah.Foo</className>
+				<methodName>fibonacci</methodName>
+			</target>
+        </targets>
+    </injection>
+</injections>
