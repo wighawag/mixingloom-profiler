@@ -1,4 +1,4 @@
-package preloader {
+package com.wighawag.preloader {
 	import flash.events.Event;
 	import flash.utils.ByteArray;
 	import org.mixingloom.byteCode.ByteParser;

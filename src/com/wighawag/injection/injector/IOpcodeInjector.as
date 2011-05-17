@@ -1,4 +1,4 @@
-package injector {
+package com.wighawag.injection.injector {
 	import org.as3commons.bytecode.abc.MethodBody;
 
 	public interface IOpcodeInjector {

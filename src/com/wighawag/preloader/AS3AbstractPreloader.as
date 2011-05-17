@@ -1,4 +1,4 @@
-package preloader {
+package com.wighawag.preloader {
 	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
 	import flash.display.Stage;

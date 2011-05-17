@@ -1,15 +1,15 @@
 package {
+	import com.wighawag.injection.patcher.MethodCallWrapperPatcher;
+	import com.wighawag.preloader.AS3AbstractPatcherPreloader;
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import org.mixingloom.patcher.IPatcher;
 	//import org.mixingloom.patcher.StringModifierPatcher;
-	import patcher.MethodCallWrapperPatcher;
-	import preloader.AS3AbstractPatcherPreloader;
 
 	// need a reference to be compiled in
 	import com.junkbyte.console.Cc;
 	Cc;
-	import profiler.TimeProfiler;
+	import com.wighawag.profiler.TimeProfiler;
 	TimeProfiler;
 
 	public class MixingLoomAS3Preloader extends AS3AbstractPatcherPreloader {

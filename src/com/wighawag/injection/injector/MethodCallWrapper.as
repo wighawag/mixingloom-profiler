@@ -1,5 +1,4 @@
-package injector {
-	import injector.MethodCall;
+package com.wighawag.injection.injector {
 	import org.as3commons.bytecode.abc.enum.Opcode;
 	import org.as3commons.bytecode.abc.MethodBody;
 	import org.as3commons.bytecode.abc.Op;

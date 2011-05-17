@@ -1,4 +1,4 @@
-package injector {
+package com.wighawag.injection.injector {
 	import flash.errors.IllegalOperationError;
 	import org.as3commons.bytecode.abc.enum.Opcode;
 	import org.as3commons.bytecode.abc.MethodBody;

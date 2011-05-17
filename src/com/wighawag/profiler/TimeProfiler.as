@@ -1,4 +1,4 @@
-package profiler {
+package com.wighawag.profiler {
 	import com.junkbyte.console.Cc;
 	import flash.utils.Dictionary;
 	import flash.utils.getTimer;

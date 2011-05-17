@@ -1,11 +1,12 @@
-package patcher {
+package com.wighawag.injection.patcher {
+	import com.wighawag.injection.injector.IOpcodeInjector;
+	import com.wighawag.injection.injector.MethodCall;
+	import com.wighawag.injection.injector.MethodCallWrapper;
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
-	import injector.IOpcodeInjector;
-	import injector.MethodCall;
-	import injector.MethodCallWrapper;
+
 	import org.as3commons.bytecode.abc.enum.NamespaceKind;
 	import org.as3commons.bytecode.tags.DoABCTag;
 

@@ -1,4 +1,4 @@
-package patcher {
+package com.wighawag.injection.patcher {
 
 	import flash.events.Event;
 	import flash.net.URLLoader;
