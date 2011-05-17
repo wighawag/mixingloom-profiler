@@ -3,11 +3,11 @@
     <injection>
 		<source>
 			<entry>
-				<className>profiler.TimeProfiler</className>
+				<className>com.wighawag.profiler.TimeProfiler</className>
 				<methodName>start</methodName>
 			</entry>
 			<exit>
-				<className>profiler.TimeProfiler</className>
+				<className>com.wighawag.profiler.TimeProfiler</className>
 				<methodName>finish</methodName>
 			</exit>
         </source>
