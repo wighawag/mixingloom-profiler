@@ -18,15 +18,17 @@ package com.wighawag.profiler {
 			if (!_totals[type]) _totals[type] = 0;
 			_totals[type] += time;
 			
+			Cc.debugch("Profiler - time", type, time, "iteration : ", _iterations[type], "total : ", _totals[type], "average : ", Number(_totals[type]) / Number(_iterations[type]));
+			delete _times[type];
+			delete _recursiveCounter[type];
+			
 			return time;
 		}
 		
 		// cannot deal with recursive call if the type is the function name
 		public static function tick(type:String):void {
 			if (_times[type]) {
-				var time : Number = count(type);
-				Cc.debugch("Profiler - time", "tick", type, time, "iteration : ", _iterations[type], "total : ", _totals[type]);
-				delete _times[type];
+				count(type);
 			} else {
 				_times[type] = getTimer();
 			}
@@ -48,10 +50,7 @@ package com.wighawag.profiler {
 		public static function finish(type:String):void {
 
 			if (_times[type] && _recursiveCounter[type] == 0) {
-				var time : Number = count(type);
-				Cc.debugch("Profiler - time", type, time, "iteration : ", _iterations[type], "total : ", _totals[type]);
-				delete _times[type];
-				delete _recursiveCounter[type];
+				count(type);
 			} else {
 				if (_times[type]){
 					_recursiveCounter[type]--;
@@ -60,5 +59,6 @@ package com.wighawag.profiler {
 				}
 			}
 		}
+		
 	}
 }
