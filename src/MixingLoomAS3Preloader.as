@@ -5,10 +5,10 @@ package {
 	import flash.events.Event;
 	import org.mixingloom.patcher.IPatcher;
 	//import org.mixingloom.patcher.StringModifierPatcher;
+	
+	import com.junkbyte.console.Cc;
 
 	// need a reference to be compiled in
-	import com.junkbyte.console.Cc;
-	Cc;
 	import com.wighawag.profiler.TimeProfiler;
 	TimeProfiler;
 
