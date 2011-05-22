@@ -16,11 +16,10 @@ package {
 
 		public function MixingLoomAS3Preloader()
 		{
-			var xmlPath : String = this.loaderInfo.parameters["xmlPath"];
-			trace("xml : " + xmlPath);
+			var xmlUrl : String = this.loaderInfo.parameters["xmlUrl"];
 			
 			var patchers : Vector.<IPatcher> = new Vector.<IPatcher>;
-			patchers.push(new MethodCallWrapperPatcher(xmlPath));
+			patchers.push(new MethodCallWrapperPatcher(xmlUrl));
 			//patchers.push(new StringModifierPatcher("a bar", "not really a bar"));
 			super(patchers);
 		}

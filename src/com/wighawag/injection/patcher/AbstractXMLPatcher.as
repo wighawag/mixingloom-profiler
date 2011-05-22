@@ -1,6 +1,7 @@
 package com.wighawag.injection.patcher {
 
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
@@ -16,6 +17,8 @@ package com.wighawag.injection.patcher {
 		public var url:String;
 
 		protected var swfContext:SwfContext;
+		
+		private var urlLoader:URLLoader
 
 		public function AbstractXMLPatcher(url:String){
 			this.url = url;
@@ -26,16 +29,27 @@ package com.wighawag.injection.patcher {
 
 				this.swfContext = swfContext;
 
-				var urlLoader:URLLoader = new URLLoader();
+				urlLoader = new URLLoader();
 				urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
 				urlLoader.addEventListener(Event.COMPLETE, handleXMLLoad);
+				urlLoader.addEventListener(IOErrorEvent.IO_ERROR, xmlFailed);
+				
 				urlLoader.load(new URLRequest(url));
 			} else {
 				invokeCallBack();
 			}
 		}
+		
+		protected function xmlFailed(e:IOErrorEvent):void 
+		{
+			urlLoader.removeEventListener(Event.COMPLETE, handleXMLLoad);
+			urlLoader.removeEventListener(IOErrorEvent.IO_ERROR, xmlFailed);
+			invokeCallBack();
+		}
 
 		protected function handleXMLLoad(event:Event):void {
+			urlLoader.removeEventListener(Event.COMPLETE, handleXMLLoad);
+			urlLoader.removeEventListener(IOErrorEvent.IO_ERROR, xmlFailed);
 			// TO BE OVERRIDEN
 			throw new SyntaxError("Abstract call, this method need to be overriden");
 		}
