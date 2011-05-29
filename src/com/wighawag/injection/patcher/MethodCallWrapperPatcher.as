@@ -26,19 +26,19 @@ package com.wighawag.injection.patcher {
 
 	import org.as3commons.bytecode.io.AbcDeserializer;
 
-	public class MethodCallWrapperPatcher extends AbstractXMLPatcher {
+	public class MethodCallWrapperPatcher extends AbstractPatcher {
 
-		public function MethodCallWrapperPatcher(url:String){
-			super(url);
+		private var _xmlData:XML;
+
+		public function MethodCallWrapperPatcher(xml:XML){
+			_xmlData = xml;
 		}
 
-		override protected function handleXMLLoad(event:Event):void {
-			var xmlData:XML = new XML((event.currentTarget as URLLoader).data as String);
+		override public function apply(invocationType:InvocationType, swfContext:SwfContext):void {
+			var targetClasses:Dictionary = new Dictionary;
 
-			var targetClasses : Dictionary = new Dictionary;
-			
-			for each (var injection:XML in xmlData.*) {
-				
+			for each (var injection:XML in _xmlData.*){
+
 				var methodEntryInvokerClassName:String = injection.source.entry.className;
 				var methodEntryInvokerNamespace:String = methodEntryInvokerClassName.substr(0, methodEntryInvokerClassName.lastIndexOf('.'));
 				methodEntryInvokerClassName = methodEntryInvokerClassName.substr(methodEntryInvokerClassName.lastIndexOf('.') + 1);
@@ -61,30 +61,25 @@ package com.wighawag.injection.patcher {
 
 				var methodExitInvokerClassQName:QualifiedName = new QualifiedName(methodExitInvokerClassName, lNamespace);
 				var methodExitInvokerMethodQName:QualifiedName = new QualifiedName(methodExitInvokerMethodName, LNamespace.PUBLIC);
-			
+
 				for each (var target:XML in injection.targets.*){
-					var className : String = target.className;
-					var methodName : String = target.methodName;
-					
-					if (!targetClasses[className])
-					{
+					var className:String = target.className;
+					var methodName:String = target.methodName;
+
+					if (!targetClasses[className]){
 						targetClasses[className] = new Dictionary();
 					}
-					if (!targetClasses[className][methodName])
-					{
+					if (!targetClasses[className][methodName]){
 						targetClasses[className][methodName] = new Vector.<IOpcodeInjector> // here only MethodCallWrapper
 					}
-					
-					var methodCallWrapper:MethodCallWrapper = new MethodCallWrapper(
-						new MethodCall(methodEntryInvokerClassQName, methodEntryInvokerMethodQName, [className + "." + methodName]),
-						new MethodCall(methodExitInvokerClassQName, methodExitInvokerMethodQName, [className + "." + methodName])
-					);
-					
+
+					var methodCallWrapper:MethodCallWrapper = new MethodCallWrapper(new MethodCall(methodEntryInvokerClassQName, methodEntryInvokerMethodQName, [className + "." + methodName]), new MethodCall(methodExitInvokerClassQName, methodExitInvokerMethodQName, [className + "." + methodName]));
+
 					targetClasses[className][methodName].push(methodCallWrapper);
 
 				}
 			}
-			
+
 
 			for each (var swfTag:SwfTag in swfContext.swfTags){
 				if (swfTag.type == DoABCTag.TAG_ID){
@@ -103,15 +98,14 @@ package com.wighawag.injection.patcher {
 
 					var abcFile:AbcFile = abcDeserializer.deserialize(abcStartLocation);
 
-					for each (var instanceInfo:InstanceInfo in abcFile.instanceInfo) {
-						var targetMethods : Dictionary = targetClasses[instanceInfo.classMultiname.fullName];
+					for each (var instanceInfo:InstanceInfo in abcFile.instanceInfo){
+						var targetMethods:Dictionary = targetClasses[instanceInfo.classMultiname.fullName];
 						if (targetMethods){
 							for each (var methodInfo:MethodInfo in instanceInfo.methodInfo){
 								var methodShortName:String = methodInfo.as3commonsBytecodeName.fullName;
 								methodShortName = methodShortName.substr(methodShortName.lastIndexOf('.') + 1);
-								if (targetMethods[methodShortName]) {
-									for each (var opcodeInjector : IOpcodeInjector in targetMethods[methodShortName])
-									{
+								if (targetMethods[methodShortName]){
+									for each (var opcodeInjector:IOpcodeInjector in targetMethods[methodShortName]){
 										opcodeInjector.inject(methodInfo.methodBody);
 									}
 								}

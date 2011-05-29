@@ -10,23 +10,31 @@ package com.wighawag.preloader {
 
 	public class AS3AbstractPatcherPreloader extends AS3AbstractPreloader {
 
-		private var _patcherApplier : IPatcherApplier;
+		private var _patcherApplier:IPatcherApplier;
+		private var _bytesToModify:ByteArray;
 
-		public function AS3AbstractPatcherPreloader(patchers : Vector.<IPatcher>){
+		public function AS3AbstractPatcherPreloader(){
 			_patcherApplier = new PatcherApplierImpl();
-			_patcherApplier.patchers = patchers;
 		}
 
 		override protected function applyModifications(bytes:ByteArray):void {
+			// save the bytes to apply to and wait for the sub class to call applyPatchers
+			_bytesToModify = bytes;
+		}
+
+		// this following method need to be called by the subclass to apply the list of patchers provided
+		protected function applyPatchers(patchers:Vector.<IPatcher>):void {
+			_patcherApplier.patchers = patchers;
+
 			var parser:ByteParser = new ByteParser();
-			var swfContext : SwfContext = new SwfContext();
-			swfContext.originalUncompressedSwfBytes = parser.uncompressSwf(bytes);
+			var swfContext:SwfContext = new SwfContext();
+			swfContext.originalUncompressedSwfBytes = parser.uncompressSwf(_bytesToModify);
 			swfContext.swfTags = parser.getAllSwfTags(swfContext.originalUncompressedSwfBytes);
 
 			_patcherApplier.swfContext = swfContext;
 			_patcherApplier.invocationType = new InvocationType(InvocationType.FRAME2); // not sure?
 			_patcherApplier.setCallBack(modificationsApplied);
-			
+
 			_patcherApplier.apply();
 		}
 
