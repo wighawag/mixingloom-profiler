@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <injections>
-    <injection>
+	<injection>
 		<source>
 			<entry>
 				<className>com.wighawag.profiler.TimeProfiler</className>
@@ -10,7 +10,7 @@
 				<className>com.wighawag.profiler.TimeProfiler</className>
 				<methodName>finish</methodName>
 			</exit>
-        </source>
+		</source>
 		<targets>
 			<target>
 				<className>blah.Foo</className>
@@ -28,6 +28,6 @@
 				<className>blah.Foo</className>
 				<methodName>fibonacci</methodName>
 			</target>
-        </targets>
-    </injection>
+		</targets>
+	</injection>
 </injections>
