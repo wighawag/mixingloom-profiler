@@ -71,7 +71,8 @@ package {
 		private function setupConsole(displayObject:DisplayObject):void {
 			Cc.config.commandLineAllowed = true // Enables full commandLine features
 			Cc.config.tracing = true; // also send traces to flash's normal trace()
-			Cc.config.maxLines = 2000; // change maximum log lines to 2000, default is 1000
+			Cc.config.maxLines = 2000; // change maximum log lines to 2000, default is 1000#
+			Cc.config.style.backgroundAlpha = 0.8;
 			Cc.startOnStage(displayObject); // finally start with these config	
 		}
 

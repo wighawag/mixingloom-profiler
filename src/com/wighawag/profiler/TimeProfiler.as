@@ -18,7 +18,7 @@ package com.wighawag.profiler {
 			if (!_totals[type]) _totals[type] = 0;
 			_totals[type] += time;
 			
-			Cc.debugch("Profiler - time", type, time, "iteration : ", _iterations[type], "total : ", _totals[type], "average : ", Number(_totals[type]) / Number(_iterations[type]));
+			Cc.debugch("Profiler - time", type, "time : ", time, "(iteration : ", _iterations[type], "total : ", _totals[type], "average : ", Number(_totals[type]) / Number(_iterations[type]), ")");
 			delete _times[type];
 			delete _recursiveCounter[type];
 			
